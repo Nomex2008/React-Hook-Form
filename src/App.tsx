@@ -3,7 +3,9 @@ import './App.scss'
 
 function App() {
 
-  const {register, handleSubmit} = useForm()
+  const {register, handleSubmit} = useForm({
+    mode: 'onChange',
+  })
 
   const onSubmit = (data: any) => {
     console.log(data)
