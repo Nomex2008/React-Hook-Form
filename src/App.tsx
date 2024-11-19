@@ -1,13 +1,18 @@
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import './App.scss'
+
+interface IForm {
+  'e-mail':string,
+  'message':string
+}
 
 function App() {
 
-  const {register, handleSubmit} = useForm({
+  const {register, handleSubmit} = useForm<IForm>({
     mode: 'onChange',
   })
 
-  const onSubmit = (data: any) => {
+  const onSubmit:SubmitHandler<IForm> = (data) => {
     console.log(data)
   }
 
