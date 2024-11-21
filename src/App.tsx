@@ -8,9 +8,12 @@ interface IForm {
 
 function App() {
 
-  const {register, handleSubmit} = useForm<IForm>({
+  const {register, handleSubmit, formState} = useForm<IForm>({
     mode: 'onChange',
   })
+
+  const emailError = formState.errors['e-mail']?.message
+  const messageError = formState.errors['message']?.message
 
   const onSubmit:SubmitHandler<IForm> = (data) => {
     console.log(data)
@@ -21,11 +24,20 @@ function App() {
       <h1>Vite + React</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} action="">
-        <input type="text" placeholder='Enter e-mail' 
+        <input type="email" placeholder='Enter e-mail' 
         {...register('e-mail', {
           required: 'This field is required', 
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+            message: 'Invalid email address'
+          }
         })}/>
-        <textarea placeholder='Enter massage:'></textarea>
+        {emailError  && <p>{emailError}</p>}
+        <textarea placeholder='Enter message:'
+        {...register('message', {
+          required: 'This field is required', 
+        })}></textarea>
+        {messageError  && <p>{messageError}</p>}
         <button type='submit'>Send</button>
       </form>
       
