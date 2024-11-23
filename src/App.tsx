@@ -1,19 +1,12 @@
 import { useEffect } from 'react'
-import {SubmitHandler, useForm } from 'react-hook-form'
+import {SubmitHandler, useForm, useFormContext } from 'react-hook-form'
 import './App.scss'
 import CheckBox from './CheckBox'
-
-export interface IForm {
-  'e-mail':string,
-  'message':string,
-  'isImportant': string
-}
+import { HookFormProvider, IForm } from './HookFormProvider'
 
 function App() {
 
-  const {register, handleSubmit, formState, reset, /* watch ,*/ control} = useForm<IForm>({
-    mode: 'onChange',
-  })
+  const {formState, handleSubmit, register, reset} = useFormContext<IForm>()
 
    /*
    setValue('e-mail', 'alexboris1004@gmail.com')
@@ -61,7 +54,7 @@ function App() {
         {//{messageError  && <p>{messageError}</p>}
         }
 
-        <CheckBox control={control}/>
+        <CheckBox/>
         
         <button
         onClick={() => reset()}>Reset</button>

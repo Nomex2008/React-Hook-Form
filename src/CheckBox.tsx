@@ -1,11 +1,10 @@
-import { Control, Controller } from "react-hook-form"
-import { IForm } from "./App"
+import { Controller, useFormContext } from "react-hook-form"
+import { IForm } from "./HookFormProvider"
 
-interface Props {
-    control: Control<IForm>
-}
+const CheckBox = () => {
+  const {control} = useFormContext<IForm>()
 
-const CheckBox = ({control}: Props) => {
+  
   return (
     <Controller 
         control={control}
