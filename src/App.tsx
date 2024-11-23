@@ -1,19 +1,21 @@
 import { useEffect } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import './App.scss'
 
 interface IForm {
   'e-mail':string,
-  'message':string
+  'message':string,
+  'isImportant': string
 }
 
 function App() {
 
-  const {register, handleSubmit, formState, reset, /* watch */} = useForm<IForm>({
+  const {register, handleSubmit, formState, reset, /* watch ,*/ control} = useForm<IForm>({
     mode: 'onChange',
   })
 
    /*
+   setValue('e-mail', 'alexboris1004@gmail.com')
   const emailWatch = watch('e-mail')
 
   useEffect(() => {
@@ -39,27 +41,44 @@ function App() {
     <>
       <h1>Vite + React</h1>
 
-      <button onClick={() => reset()}>Reset</button>
-
       <form onSubmit={handleSubmit(onSubmit)} action="">
 
         <input type="email" placeholder='Enter e-mail' 
         {...register('e-mail', {
-          required: 'This field is required', 
+          required: 'This field is required!', 
           pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-            message: 'Invalid email address'
+            message: 'Invalid email address!'
           }
         })}/>
-        {emailError  && <p>{emailError}</p>}
+        {emailError  && <p style={{color: 'red',position: 'absolute', left: '5%', bottom: '0'}}>{emailError}</p>}
 
         <textarea placeholder='Enter message:'
         {...register('message', {
           required: 'This field is required', 
         })}></textarea>
-        {messageError  && <p>{messageError}</p>}
+        {//{messageError  && <p>{messageError}</p>}
+        }
+
+        <Controller 
+        control={control}
+        name='isImportant'
+        render={({field}) => (
+          <button
+          style={{display: 'block', width: '100%', marginBottom: '20px'}}
+          onClick={(e) => {
+            e.preventDefault()
+            field.onChange(!field.value)
+          }}
+          >{field.value ? 'important' : 'not important'}</button>
+        )}/>
         
-        <button type='submit'>Send</button>
+        <button
+        onClick={() => reset()}>Reset</button>
+        
+        <button
+        style={{marginLeft: '10px'}}
+         type='submit'>Send</button>
       </form>
       
     </>
