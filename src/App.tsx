@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import {SubmitHandler, useForm } from 'react-hook-form'
 import './App.scss'
+import CheckBox from './CheckBox'
 
-interface IForm {
+export interface IForm {
   'e-mail':string,
   'message':string,
   'isImportant': string
@@ -60,18 +61,7 @@ function App() {
         {//{messageError  && <p>{messageError}</p>}
         }
 
-        <Controller 
-        control={control}
-        name='isImportant'
-        render={({field}) => (
-          <button
-          style={{display: 'block', width: '100%', marginBottom: '20px'}}
-          onClick={(e) => {
-            e.preventDefault()
-            field.onChange(!field.value)
-          }}
-          >{field.value ? 'important' : 'not important'}</button>
-        )}/>
+        <CheckBox control={control}/>
         
         <button
         onClick={() => reset()}>Reset</button>
