@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import './App.scss'
 
@@ -8,9 +9,24 @@ interface IForm {
 
 function App() {
 
-  const {register, handleSubmit, formState, reset} = useForm<IForm>({
+  const {register, handleSubmit, formState, reset, /* watch */} = useForm<IForm>({
     mode: 'onChange',
   })
+
+   /*
+  const emailWatch = watch('e-mail')
+
+  useEffect(() => {
+    console.log(emailWatch)
+  }, [emailWatch])
+
+ useEffect(() => {
+    reset({
+    'e-mail': "alexboris1004@gmail.com",
+      message: 'ergre',
+    })
+  }, [reset])
+  */
 
   const emailError = formState.errors['e-mail']?.message
   const messageError = formState.errors['message']?.message
